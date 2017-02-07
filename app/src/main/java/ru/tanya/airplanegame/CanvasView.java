@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -63,5 +64,13 @@ public class CanvasView extends View implements ICanvasView {
 
     public void drawMeteorite(Meteorite meteorite1) {
         canvas.drawBitmap(meteorite1.getBitmap(), meteorite1.getX(), meteorite1.getY(), null);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gameManager.move();
+        invalidate();
+        return true;
+
     }
 }

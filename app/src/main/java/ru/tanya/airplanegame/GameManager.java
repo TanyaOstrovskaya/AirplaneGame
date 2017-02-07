@@ -1,6 +1,7 @@
 package ru.tanya.airplanegame;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class GameManager {
@@ -13,14 +14,6 @@ public class GameManager {
     private static int width;
     private static int height;
 
-    public Airplane getAirplane() {
-        return airplane;
-    }
-
-    public Meteorite getMeteorite1() {
-        return meteorite1;
-    }
-
     public GameManager(CanvasView canvasView, int w, int h, Context context) {
         height = h;
         width = w;
@@ -29,16 +22,38 @@ public class GameManager {
         initMeteorites(context);
     }
 
+    public static int getWidth() {
+        return width;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
+    public Airplane getAirplane() {
+        return airplane;
+    }
+
+    public Meteorite getMeteorite1() {
+        return meteorite1;
+    }
+
     private void initMeteorites(Context context) {
-        this.meteorite1 =  new Meteorite(width/4, height/4, BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1));
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1);
+        this.meteorite1 =  new Meteorite(width/4 - bitmap.getWidth()/2, height/4 - bitmap.getHeight()/2, bitmap);
     }
 
     private void initAirplane(Context context) {
-        this.airplane = new Airplane(width/2, height/2, BitmapFactory.decodeResource(context.getResources(), R.drawable.plane));
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.plane);
+        this.airplane = new Airplane(width/2, height/2, bitmap);
     }
 
     public void onDraw() {
         canvasView.drawAirplane (airplane);
         canvasView.drawMeteorite (meteorite1);
+    }
+
+    public void move() {
+        meteorite1.moveOneStep();
     }
 }
