@@ -3,6 +3,7 @@ package ru.tanya.airplanegame;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -19,12 +20,13 @@ public class CanvasView extends View implements ICanvasView {
     private Canvas canvas;
     private Toast toast;        //хранит текущий тост, который отображается на экране
 
-    public CanvasView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initWidthandHeight(context);
+    public CanvasView(Context context) {
+        super(context);
+        initWidthAndHeight(context);
+        gameManager = new GameManager(this, width, height, context);
     }
 
-    private void initWidthandHeight(Context context) {
+    private void initWidthAndHeight(Context context) {
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         Point point = new Point();
@@ -38,7 +40,6 @@ public class CanvasView extends View implements ICanvasView {
         super.onDraw(canvas);
         this.canvas = canvas;
         gameManager.onDraw();
-//        canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.plane),10,15,null);
     }
 
     @Override
@@ -56,5 +57,11 @@ public class CanvasView extends View implements ICanvasView {
         toast.show();
     }
 
+    public void drawAirplane(Airplane airplane) {
+        canvas.drawBitmap(airplane.getBitmap(), airplane.getX(), airplane.getY(), null);
+    }
 
+    public void drawMeteorite(Meteorite meteorite1) {
+        canvas.drawBitmap(meteorite1.getBitmap(), meteorite1.getX(), meteorite1.getY(), null);
+    }
 }
