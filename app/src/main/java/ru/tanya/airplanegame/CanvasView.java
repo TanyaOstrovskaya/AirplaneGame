@@ -71,6 +71,5 @@ public class CanvasView extends View implements ICanvasView {
         gameManager.move();
         invalidate();
         return true;
-
     }
 }
