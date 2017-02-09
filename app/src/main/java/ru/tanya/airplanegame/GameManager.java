@@ -56,4 +56,8 @@ public class GameManager {
     public void move() {
         meteorite1.moveOneStep();
     }
+
+    public void startGame() {
+        move();
+    }
 }

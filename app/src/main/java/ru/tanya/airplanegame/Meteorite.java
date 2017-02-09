@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 public class Meteorite extends SimpleImageObject {
 
-    private int dy = 30;
+    private int dy = 5;
 
     public Meteorite(int x, int y, Bitmap bitmap) {
         super(x, y, bitmap);
