@@ -9,15 +9,15 @@ public class GameManager {
     private Airplane airplane;
     private Meteorite meteorite1;
     private Meteorite meteorite2;
-    private CanvasView canvasView;
+    private MainGamePanel gamePanel;
 
     private static int width;
     private static int height;
 
-    public GameManager(CanvasView canvasView, int w, int h, Context context) {
+    public GameManager(MainGamePanel gamePanel, int w, int h, Context context) {
         height = h;
         width = w;
-        this.canvasView = canvasView;
+        this.gamePanel = gamePanel;
         initAirplane(context);
         initMeteorites(context);
     }
@@ -49,8 +49,8 @@ public class GameManager {
     }
 
     public void onDraw() {
-        canvasView.drawAirplane (airplane);
-        canvasView.drawMeteorite (meteorite1);
+        gamePanel.drawAirplane (airplane);
+        gamePanel.drawMeteorite (meteorite1);
     }
 
     public void startGame() {
@@ -60,13 +60,13 @@ public class GameManager {
 
     private void checkCollisions() {
         //если картинка метеорита зашла на картинку самолета по правой границе
-//        if (meteorite1.getX()+ meteorite1.getBitmapWidth()/2 >
-//                airplane.getX() - airplane.getBitmapWidth()/2) {
+        if (meteorite1.getX()+ meteorite1.getBitmapWidth()/2 >
+                airplane.getX() - airplane.getBitmapWidth()/2) {
             //если картинка метеорита зашла на картинку самолета по нижней границе
-            if (meteorite1.getY() + meteorite1.getBitmapHeight()/2 >
-                    airplane.getY() - airplane.getBitmapHeight()/2) {
-                canvasView.showMessage("YOU LOSE");
+            if (meteorite1.getY() + meteorite1.getBitmapHeight() / 2 >
+                    airplane.getY() - airplane.getBitmapHeight() / 2) {
+                gamePanel.showMessage("YOU LOSE");
             }
-
+        }
     }
 }

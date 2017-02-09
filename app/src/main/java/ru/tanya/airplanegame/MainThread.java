@@ -1,23 +1,50 @@
 package ru.tanya.airplanegame;
 
-public class MainThread extends Thread {
-    private GameManager gameManager;
-    private CanvasView canvasView;
-    private boolean isRunning;
+import android.graphics.Canvas;
+import android.util.Log;
+import android.view.SurfaceHolder;
 
+public class MainThread extends Thread {
+
+    private static final String TAG = MainThread.class.getSimpleName();
+
+    private SurfaceHolder surfaceHolder;
+    private MainGamePanel gamePanel;
+
+    private boolean running;
     public void setRunning(boolean running) {
-        isRunning = running;
+        this.running = running;
     }
 
-    public MainThread(GameManager gameManager, CanvasView canvasView) {
-        this.gameManager = gameManager;
-        this.canvasView = canvasView;
+    public MainThread(SurfaceHolder surfaceHolder, MainGamePanel gamePanel) {
+        super();
+        this.surfaceHolder = surfaceHolder;
+        this.gamePanel = gamePanel;
     }
 
     @Override
     public void run() {
-        for (int i = 0; i <100 ; i++) {
-            gameManager.startGame();
+        Canvas canvas;
+        Log.d(TAG, "Starting game loop");
+        while (running) {
+            canvas = null;
+            // ïûòàåìñÿ çàáëîêèðîâàòü canvas
+            // äëÿ èçìåíåíèå êàðòèíêè íà ïîâåðõíîñòè
+            try {
+                canvas = this.surfaceHolder.lockCanvas();
+                synchronized (surfaceHolder) {
+                    // îáíîâëÿåì ñîñòîÿíèå
+                    this.gamePanel.update();
+                    // ôîðìèðóåì íîâûé êàäð
+                    this.gamePanel.onDraw(canvas); //Âûçûâàåì ìåòîä äëÿ ðèñîâàíèÿ
+                }
+            } finally {
+                // â ñëó÷àå îøèáêè, ïëîñêîñòü íå ïåðåøëà â
+                //òðåáóåìîå ñîñòîÿíèå
+                if (canvas != null) {
+                    surfaceHolder.unlockCanvasAndPost(canvas);
+                }
+            }
         }
     }
 }
