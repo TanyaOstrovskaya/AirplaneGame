@@ -53,11 +53,20 @@ public class GameManager {
         canvasView.drawMeteorite (meteorite1);
     }
 
-    public void move() {
+    public void startGame() {
         meteorite1.moveOneStep();
+        checkCollisions();
     }
 
-    public void startGame() {
-        move();
+    private void checkCollisions() {
+        //если картинка метеорита зашла на картинку самолета по правой границе
+//        if (meteorite1.getX()+ meteorite1.getBitmapWidth()/2 >
+//                airplane.getX() - airplane.getBitmapWidth()/2) {
+            //если картинка метеорита зашла на картинку самолета по нижней границе
+            if (meteorite1.getY() + meteorite1.getBitmapHeight()/2 >
+                    airplane.getY() - airplane.getBitmapHeight()/2) {
+                canvasView.showMessage("YOU LOSE");
+            }
+
     }
 }
