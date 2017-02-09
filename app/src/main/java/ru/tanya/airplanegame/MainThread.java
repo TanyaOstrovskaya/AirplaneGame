@@ -29,19 +29,14 @@ public class MainThread extends Thread {
         Log.d(TAG, "Starting game loop");
         while (running) {
             canvas = null;
-            // ïûòàåìñÿ çàáëîêèðîâàòü canvas
-            // äëÿ èçìåíåíèå êàðòèíêè íà ïîâåðõíîñòè
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
-                    // îáíîâëÿåì ñîñòîÿíèå
                     this.gamePanel.update();
-                    // ôîðìèðóåì íîâûé êàäð
-                    this.gamePanel.onDraw(canvas); //Âûçûâàåì ìåòîä äëÿ ðèñîâàíèÿ
+                    this.gamePanel.onDraw(canvas);
                 }
             } finally {
-                // â ñëó÷àå îøèáêè, ïëîñêîñòü íå ïåðåøëà â
-                //òðåáóåìîå ñîñòîÿíèå
+
                 if (canvas != null) {
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }

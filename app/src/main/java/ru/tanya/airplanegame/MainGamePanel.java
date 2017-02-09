@@ -70,6 +70,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     protected void onDraw(Canvas canvas) {
+        canvas.drawColor(Color.WHITE);
         canvas.drawBitmap(gameManager.getAirplane().getBitmap(), gameManager.getAirplane().getX(), gameManager.getAirplane().getY(), null );
         canvas.drawBitmap(gameManager.getMeteorite1().getBitmap(), gameManager.getMeteorite1().getX(), gameManager.getMeteorite1().getY(), null );
     }
