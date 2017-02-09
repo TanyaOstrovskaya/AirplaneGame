@@ -25,6 +25,7 @@ public class CanvasView extends View implements ICanvasView {
         super(context);
         initWidthAndHeight(context);
         gameManager = new GameManager(this, width, height, context);
+
     }
 
     private void initWidthAndHeight(Context context) {
@@ -68,7 +69,7 @@ public class CanvasView extends View implements ICanvasView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        gameManager.move();
+        gameManager.startGame();
         invalidate();
         return true;
     }
