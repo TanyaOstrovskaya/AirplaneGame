@@ -4,13 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 public class SimpleImageObject {
+
+    public static final int CURRENT_SPEED =  1;
     protected int x;
     protected int y;
     private Bitmap bitmap;
     private int bitmapHeight;
     private int bitmapWidth;
-    private boolean touched;
-    private int speed = 1;
 
     public SimpleImageObject (int x, int y, Bitmap bitmap) {
         bitmapHeight = bitmap.getHeight();
@@ -39,18 +39,5 @@ public class SimpleImageObject {
     public int getBitmapWidth() {
         return bitmapWidth;
     }
-
-    public boolean isTouched() {
-        return touched;
-    }
-
-    public void setTouched(boolean touched) {
-        this.touched = touched;
-    }
-
-    public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, x - (bitmap.getWidth() / 2), y - (bitmap.getHeight() / 2), null);
-    }
-
 
 }
