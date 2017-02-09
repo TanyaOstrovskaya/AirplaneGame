@@ -7,32 +7,43 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String TAG = MainGamePanel.class.getSimpleName();
 
     private MainThread thread;
-    private Airplane airplane;
+    private GameManager gameManager;
+    private Toast toast;
+
+    private int width;
+    private int height;
 
     public MainGamePanel(Context context) {
         super(context);
-        // Ñîîáùàåì, ÷òî îáðàáîò÷èê ñîáûòèé îò ïîâåðõíîñòè áóäåò ðåàëèçîâàí
-        // â ýòîì êëàññå.
         getHolder().addCallback(this);
-
-        // ñîçäàåì ïîòîê äëÿ èãðîâîãî öèêëà
-        airplane = new Airplane(50, 50, BitmapFactory.decodeResource(getResources(), R.drawable.plane));
-
-        // create the game loop thread
+        initWidthAndHeigth(context);
         thread = new MainThread(getHolder(), this);
-
-        // äåëàåì GamePanel ñïîñîáíîé îáðàáàòûâàòü ôîêóñ è ñîáûòèÿ
+        gameManager = new GameManager(this, width, height, context);
         setFocusable(true);
+    }
+
+    private void initWidthAndHeigth(Context context) {
+        WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);                 //point содержит координаты правой нижней точки экрана
+        width = point.x;
+        height = point.y;
     }
 
     @Override
@@ -41,70 +52,39 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        // Â ýòîé òî÷êå ïîâåðõíîñòü óæå ñîçäàíà è ìû ìîæåì
-        // áåçîïàñíî çàïóñòèòü èãðîâîé öèêë â ïîòîêå
         thread.setRunning(true);
         thread.start();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.d(TAG, "Surface is being destroyed");
-        //ïîñûëàåì ïîòîêó êîìàíäó íà çàêðûòèå è äîæèäàåìñÿ,
-        //ïîêà ïîòîê íå áóäåò çàêðûò.
         boolean retry = true;
         while (retry) {
             try {
                 thread.join();
                 retry = false;
             } catch (InterruptedException e) {
-                // ïûòàåìñÿ ñíîâà îñòàíîâèòü ïîòîê thread
             }
         }
-        Log.d(TAG, "Thread was shut down cleanly");
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // âûçûâàåì ìåòîä handleActionDown, êóäà ïåðåäàåì êîîðäèíàòû êàñàíèÿ
-            airplane.handleActionDown((int)event.getX(), (int)event.getY());
-
-            // åñëè ùåë÷îê ïî íèæíåé îáëàñòè ýêðàíà, òî âûõîäèì
-            if (event.getY() > getHeight() - 50) {
-                thread.setRunning(false);
-                ((Activity)getContext()).finish();
-            } else {
-                Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
-            }
-        } if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            // ïåðåìåùåíèå
-            if (airplane.isTouched()) {
-                // ðîáîò íàõîäèòñÿ â ñîñòîÿíèè ïåðåòàñêèâàíèÿ,
-                // ïîýòîìó èçìåíÿåì åãî êîîðäèíàòû
-                airplane.setX((int)event.getX());
-                airplane.setY((int)event.getY());
-            }
-        } if (event.getAction() == MotionEvent.ACTION_UP) {
-            // Îáðàáàòûâàåì îòïóñêàíèå
-            if (airplane.isTouched()) {
-                airplane.setTouched(false);
-            }
-        }
-        return true;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // Çàëèâàåì canvas ÷åðíûì öâåòîì
-        canvas.drawColor(Color.BLACK);
-        // Âûçûâàåì ìåòîä, êîòîðûé âûâîäèò ðèñóíîê ðîáîòà
-        airplane.draw(canvas);
+        gameManager.getAirplane().draw(canvas);
+        gameManager.getMeteorite1().draw(canvas);
     }
 
     public void update() {
+        gameManager.update();
+    }
 
-        airplane.update();
+    public void showMessage(String text) {
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }
 
