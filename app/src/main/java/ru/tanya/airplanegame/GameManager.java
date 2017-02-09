@@ -48,16 +48,6 @@ public class GameManager {
         this.airplane = new Airplane(width/2, height/2, bitmap);
     }
 
-    public void onDraw() {
-        gamePanel.drawAirplane (airplane);
-        gamePanel.drawMeteorite (meteorite1);
-    }
-
-    public void startGame() {
-        meteorite1.moveOneStep();
-        checkCollisions();
-    }
-
     private void checkCollisions() {
         //если картинка метеорита зашла на картинку самолета по правой границе
         if (meteorite1.getX()+ meteorite1.getBitmapWidth()/2 >
@@ -65,8 +55,13 @@ public class GameManager {
             //если картинка метеорита зашла на картинку самолета по нижней границе
             if (meteorite1.getY() + meteorite1.getBitmapHeight() / 2 >
                     airplane.getY() - airplane.getBitmapHeight() / 2) {
-                gamePanel.showMessage("YOU LOSE");
+             //   gamePanel.showMessage("YOU LOSE");
             }
         }
+    }
+
+    public void update() {
+        meteorite1.update();
+        checkCollisions();
     }
 }
