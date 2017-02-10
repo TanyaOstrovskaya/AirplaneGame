@@ -10,9 +10,17 @@ public class GameManager {
     private Meteorite meteorite1;
     private Meteorite meteorite2;
     private MainGamePanel gamePanel;
-
+    private boolean isGameRunning;
     private static int width;
     private static int height;
+
+    public boolean isGameRunning() {
+        return isGameRunning;
+    }
+
+    public void setGameRunning(boolean gameRunning) {
+        isGameRunning = gameRunning;
+    }
 
     public GameManager(MainGamePanel gamePanel, int w, int h, Context context) {
         height = h;
@@ -20,6 +28,7 @@ public class GameManager {
         this.gamePanel = gamePanel;
         initAirplane(context);
         initMeteorites(context);
+        isGameRunning = true;
     }
 
     public static int getWidth() {
@@ -48,20 +57,22 @@ public class GameManager {
         this.airplane = new Airplane(width/2, height/2, bitmap);
     }
 
-    private void checkCollisions() {
+    private boolean checkCollisions() {
         //если картинка метеорита зашла на картинку самолета по правой границе
         if (meteorite1.getX()+ meteorite1.getBitmapWidth()/2 >
                 airplane.getX() - airplane.getBitmapWidth()/2) {
             //если картинка метеорита зашла на картинку самолета по нижней границе
             if (meteorite1.getY() + meteorite1.getBitmapHeight() / 2 >
                     airplane.getY() - airplane.getBitmapHeight() / 2) {
-             //   gamePanel.showMessage("YOU LOSE");
+                return true;
             }
         }
+        return false;
     }
 
-    public void update() {
+    public boolean updateAndCheckCollisions() {
         meteorite1.update();
-        checkCollisions();
+        isGameRunning = checkCollisions();
+        return isGameRunning;
     }
 }

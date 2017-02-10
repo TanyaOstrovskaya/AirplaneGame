@@ -1,17 +1,12 @@
 package ru.tanya.airplanegame;
 
-
-
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -54,6 +49,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
+        if (!thread.isRunning())
+            System.exit(0);
     }
 
     @Override
@@ -71,12 +68,20 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
-        canvas.drawBitmap(gameManager.getAirplane().getBitmap(), gameManager.getAirplane().getX(), gameManager.getAirplane().getY(), null );
-        canvas.drawBitmap(gameManager.getMeteorite1().getBitmap(), gameManager.getMeteorite1().getX(), gameManager.getMeteorite1().getY(), null );
+        if (gameManager.isGameRunning()) {
+            canvas.drawBitmap(gameManager.getAirplane().getBitmap(), gameManager.getAirplane().getX(), gameManager.getAirplane().getY(), null );
+            canvas.drawBitmap(gameManager.getMeteorite1().getBitmap(), gameManager.getMeteorite1().getX(), gameManager.getMeteorite1().getY(), null );
+        } else {
+            Paint paint = new Paint();
+            paint.setTextSize(40);
+            canvas.drawText("YOU LOSE", gameManager.getWidth()/2, gameManager.getHeight()/2, paint );
+        }
     }
 
-    public void update() {
-        gameManager.update();
+    public boolean updateAndCheckCollisions() {
+        boolean isGameEnded =  gameManager.updateAndCheckCollisions();
+        gameManager.setGameRunning(!isGameEnded);
+        return isGameEnded;
     }
 
     public void showMessage(String text) {
@@ -91,85 +96,4 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
 
 
-//import android.content.Context;
-//import android.graphics.BitmapFactory;
-//import android.graphics.Canvas;
-//import android.graphics.Paint;
-//import android.graphics.Point;
-//import android.util.AttributeSet;
-//import android.view.Display;
-//import android.view.Gravity;
-//import android.view.MotionEvent;
-//import android.view.View;
-//import android.view.WindowManager;
-//import android.widget.Button;
-//import android.widget.Toast;
 
-//public class MainGamePanel extends View implements ICanvasView, Runnable {
-//
-//    private GameManager gameManager;
-//    private static int width;
-//    private static int height;
-//    private Canvas canvas;
-//    private Toast toast;        //хранит текущий тост, который отображается на экране
-//    private boolean isRunning;
-//
-//    public MainGamePanel(Context context) {
-//        super(context);
-//        initWidthAndHeight(context);
-//        gameManager = new GameManager(this, width, height, context);
-//        isRunning = true;
-//        new Thread(this).start();
-//    }
-//
-//    private void initWidthAndHeight(Context context) {
-//        WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-//        Display display = windowManager.getDefaultDisplay();
-//        Point point = new Point();
-//        display.getSize(point);                 //point содержит координаты правой нижней точки экрана
-//        width = point.x;
-//        height = point.y;
-//    }
-//
-//    @Override
-//    protected void onDraw(Canvas canvas) {
-//        super.onDraw(canvas);
-//        this.canvas = canvas;
-//        gameManager.onDraw();
-//    }
-//
-//    @Override
-//    public void redraw() {
-//        invalidate();
-//    }
-//
-//    @Override
-//    public void showMessage(String text) {
-//        if (toast != null) {
-//            toast.cancel();
-//        }
-//        toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-//        toast.setGravity(Gravity.CENTER, 0, 0);
-//        toast.show();
-//    }
-//
-//    public void drawAirplane(Airplane airplane) {
-//        canvas.drawBitmap(airplane.getBitmap(), airplane.getX(), airplane.getY(), null);
-//    }
-//
-//    public void drawMeteorite(Meteorite meteorite1) {
-//        canvas.drawBitmap(meteorite1.getBitmap(), meteorite1.getX(), meteorite1.getY(), null);
-//    }
-//
-//
-//    @Override
-//    public void run() {
-//        synchronized (this) {
-//            while (isRunning) {
-//                gameManager.startGame();
-//                invalidate();
-//            }
-//        }
-//
-//    }
-//}
