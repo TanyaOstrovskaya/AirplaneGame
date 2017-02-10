@@ -2,17 +2,18 @@ package ru.tanya.airplanegame;
 
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
+import android.widget.Toast;
 
 public class MainThread extends Thread {
-
-    private static final String TAG = MainThread.class.getSimpleName();
 
     private SurfaceHolder surfaceHolder;
     private MainGamePanel gamePanel;
     private GameManager gameManager;
 
     private boolean running;
+    public boolean isRunning() { return running;}
     public void setRunning(boolean running) {
         this.running = running;
     }
@@ -26,13 +27,13 @@ public class MainThread extends Thread {
     @Override
     public void run() {
         Canvas canvas;
-        Log.d(TAG, "Starting game loop");
+        Toast toast;
         while (running) {
             canvas = null;
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
-                    this.gamePanel.update();
+                    running = !this.gamePanel.updateAndCheckCollisions();
                     this.gamePanel.onDraw(canvas);
                 }
             } finally {
