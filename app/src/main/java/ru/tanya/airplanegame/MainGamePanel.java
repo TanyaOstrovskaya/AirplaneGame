@@ -85,7 +85,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 null );
 
         if (!thread.isRunning()) {
-//            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.WHITE);
             Paint paint = new Paint();
             paint.setTextSize(40);
             paint.setTextAlign(Paint.Align.CENTER);

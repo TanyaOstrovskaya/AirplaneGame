@@ -11,9 +11,14 @@ public class Meteorite extends SimpleImageObject {
     }
 
     private void checkDisplayBounds() {
-        if ((y + getBitmapHeight()/2) > GameManager.getHeight()) {
+        if ((y - getBitmapHeight()/2) > GameManager.getHeight()) {
             y = -getBitmapHeight()/2;
-            x = GameManager.getWidth() - getBitmapWidth();
+            if (x > GameManager.getWidth()/2) {
+                x = getBitmapWidth();
+            } else {
+                x = GameManager.getWidth() - getBitmapWidth();
+            }
+
         }
     }
 

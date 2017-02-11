@@ -37,7 +37,7 @@ public class GameManager {
 
     private void initMeteorites(Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1);
-        this.meteorite =  new Meteorite(width/10, height/10, bitmap);
+        this.meteorite =  new Meteorite(bitmap.getWidth(), bitmap.getHeight(), bitmap);
     }
 
     private void initAirplane(Context context) {
