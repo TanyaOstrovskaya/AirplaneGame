@@ -75,16 +75,17 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
-        if (thread.isRunning()) {
-            canvas.drawBitmap(gameManager.getAirplane().getBitmap(),
-                    gameManager.getAirplane().getX() - gameManager.getAirplane().getBitmapWidth()/2,
-                    gameManager.getAirplane().getY() - gameManager.getAirplane().getBitmapHeight()/2,
-                    null );
-            canvas.drawBitmap(gameManager.getMeteorite().getBitmap(),
-                    gameManager.getMeteorite().getX() - gameManager.getMeteorite().getBitmapWidth()/2,
-                    gameManager.getMeteorite().getY() - gameManager.getMeteorite().getBitmapHeight()/2,
-                    null );
-        } else {
+        canvas.drawBitmap(gameManager.getAirplane().getBitmap(),
+                gameManager.getAirplane().getX() - gameManager.getAirplane().getBitmapWidth()/2,
+                gameManager.getAirplane().getY() - gameManager.getAirplane().getBitmapHeight()/2,
+                null );
+        canvas.drawBitmap(gameManager.getMeteorite().getBitmap(),
+                gameManager.getMeteorite().getX() - gameManager.getMeteorite().getBitmapWidth()/2,
+                gameManager.getMeteorite().getY() - gameManager.getMeteorite().getBitmapHeight()/2,
+                null );
+
+        if (!thread.isRunning()) {
+//            canvas.drawColor(Color.WHITE);
             Paint paint = new Paint();
             paint.setTextSize(40);
             paint.setTextAlign(Paint.Align.CENTER);
