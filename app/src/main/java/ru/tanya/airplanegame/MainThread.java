@@ -28,7 +28,6 @@ public class MainThread extends Thread {
     @Override
     public void run() {
         Canvas canvas;
-        Toast toast;
         while (running) {
             canvas = null;
             try {

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -39,7 +38,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private void initGameManager(Context context) {
-        gameManager = new GameManager(this, width, height, context);
+        gameManager = new GameManager(width, height, context);
     }
 
     private void initWidthAndHeigth(Context context) {
@@ -77,13 +76,19 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
         if (thread.isRunning()) {
-            canvas.drawBitmap(gameManager.getAirplane().getBitmap(), gameManager.getAirplane().getX(), gameManager.getAirplane().getY(), null );
-            canvas.drawBitmap(gameManager.getMeteorite1().getBitmap(), gameManager.getMeteorite1().getX(), gameManager.getMeteorite1().getY(), null );
+            canvas.drawBitmap(gameManager.getAirplane().getBitmap(),
+                    gameManager.getAirplane().getX() - gameManager.getAirplane().getBitmapWidth()/2,
+                    gameManager.getAirplane().getY() - gameManager.getAirplane().getBitmapHeight()/2,
+                    null );
+            canvas.drawBitmap(gameManager.getMeteorite().getBitmap(),
+                    gameManager.getMeteorite().getX() - gameManager.getMeteorite().getBitmapWidth()/2,
+                    gameManager.getMeteorite().getY() - gameManager.getMeteorite().getBitmapHeight()/2,
+                    null );
         } else {
             Paint paint = new Paint();
             paint.setTextSize(40);
             paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText("YOU LOSE", gameManager.getWidth()/2, gameManager.getHeight()/2, paint );
+            canvas.drawText("YOU LOSE", gameManager.getWidth()/2, gameManager.getHeight()/2, paint);
         }
     }
 
