@@ -46,16 +46,30 @@ public class GameManager {
     }
 
     private boolean checkCollisions() {
-        //If the meteorite image intersects the plane image on the bottom border
-        if (meteorite.getY() + meteorite.getBitmapHeight() / 2 >
+        // if the meteorite image intersects the plane image on the BOTTOM border
+        if (meteorite.getY() + meteorite.getBitmapHeight() / 2>
                 airplane.getY() - airplane.getBitmapHeight() / 2) {
-            //If the meteorite image intersects the plane image on the right border
-            if (meteorite.getX() + meteorite.getBitmapWidth() / 2 >
-                    airplane.getX() - airplane.getBitmapWidth() / 2) {
-                return false;       //collision - stop game cycle
+
+            // if meteorite is in left part of display
+            if (meteorite.getX() < width/2) {
+                //If the meteorite image intersects the plane image on the RIGHT border
+                if (meteorite.getX() + meteorite.getBitmapWidth() / 2  >
+                        airplane.getX() - airplane.getBitmapWidth() / 2) {
+                    meteorite.updateCoordinates();
+                    return false;       //collision - stop game cycle
+                }
+            } else  {
+                // if the meteorite image intersects the plane image on the LEFT border
+                if (meteorite.getX() - meteorite.getBitmapWidth() / 2 <
+                        airplane.getX() - airplane.getBitmapWidth() / 2) {
+                    meteorite.updateCoordinates();
+                    return false;       //collision - stop game cycle
+                }
             }
         }
-        return true;        //no collisions
+
+        // no collisions
+        return true;
     }
 
     public boolean updateAndCheckCollisions() {
