@@ -18,7 +18,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     private MainThread thread;
     private GameManager gameManager;
-    private Toast toast;
+    private Toast toast;                //for messages
 
     private int width;
     private int height;
@@ -26,10 +26,20 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     public MainGamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
+
         initWidthAndHeigth(context);
-        thread = new MainThread(getHolder(), this);
-        gameManager = new GameManager(this, width, height, context);
+        initGameManager(context);
+        initMainThread();
+
         setFocusable(true);
+    }
+
+    private void initMainThread() {
+        thread = new MainThread(getHolder(), this);
+    }
+
+    private void initGameManager(Context context) {
+        gameManager = new GameManager(this, width, height, context);
     }
 
     private void initWidthAndHeigth(Context context) {
@@ -49,8 +59,6 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
-        if (!thread.isRunning())
-            System.exit(0);
     }
 
     @Override
@@ -68,30 +76,30 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
-        if (gameManager.isGameRunning()) {
+        if (thread.isRunning()) {
             canvas.drawBitmap(gameManager.getAirplane().getBitmap(), gameManager.getAirplane().getX(), gameManager.getAirplane().getY(), null );
             canvas.drawBitmap(gameManager.getMeteorite1().getBitmap(), gameManager.getMeteorite1().getX(), gameManager.getMeteorite1().getY(), null );
         } else {
             Paint paint = new Paint();
             paint.setTextSize(40);
+            paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText("YOU LOSE", gameManager.getWidth()/2, gameManager.getHeight()/2, paint );
         }
     }
 
     public boolean updateAndCheckCollisions() {
-        boolean isGameEnded =  gameManager.updateAndCheckCollisions();
-        gameManager.setGameRunning(!isGameEnded);
-        return isGameEnded;
+        return gameManager.updateAndCheckCollisions();
     }
 
-    public void showMessage(String text) {
-        if (toast != null) {
-            toast.cancel();
-        }
-        toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
+
+    //    public void showMessage(String text) {
+//        if (toast != null) {
+//            toast.cancel();
+//        }
+//        toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+//        toast.setGravity(Gravity.CENTER, 0, 0);
+//        toast.show();
+//    }
 }
 
 

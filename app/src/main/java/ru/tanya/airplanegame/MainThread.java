@@ -24,6 +24,7 @@ public class MainThread extends Thread {
         this.gamePanel = gamePanel;
     }
 
+    // main game cycle
     @Override
     public void run() {
         Canvas canvas;
@@ -33,7 +34,7 @@ public class MainThread extends Thread {
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
-                    running = !this.gamePanel.updateAndCheckCollisions();
+                    running = this.gamePanel.updateAndCheckCollisions();
                     this.gamePanel.onDraw(canvas);
                 }
             } finally {
