@@ -10,22 +10,15 @@ public class Meteorite extends SimpleImageObject {
         super(x, y, bitmap);
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    private void checkBounds() {
+    private void checkDisplayBounds() {
         if ((y + getBitmapHeight()/2) > GameManager.getHeight()) {
             y = -getBitmapHeight()/2;
+            x = GameManager.getWidth() - getBitmapWidth();
         }
     }
 
-    public void update() {
-       y += speed;
-        checkBounds();
+    public void updateCoordinates() {
+        y += speed;
+        checkDisplayBounds();
     }
 }

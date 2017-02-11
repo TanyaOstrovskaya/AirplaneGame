@@ -7,17 +7,14 @@ import android.graphics.BitmapFactory;
 public class GameManager {
 
     private Airplane airplane;
-    private Meteorite meteorite1;
-    private Meteorite meteorite2;
-    private MainGamePanel gamePanel;
+    private Meteorite meteorite;
     private static int width;
     private static int height;
 
 
-    public GameManager(MainGamePanel gamePanel, int w, int h, Context context) {
+    public GameManager(int w, int h, Context context) {
         height = h;
         width = w;
-        this.gamePanel = gamePanel;
         initAirplane(context);
         initMeteorites(context);
     }
@@ -34,13 +31,13 @@ public class GameManager {
         return airplane;
     }
 
-    public Meteorite getMeteorite1() {
-        return meteorite1;
+    public Meteorite getMeteorite() {
+        return meteorite;
     }
 
     private void initMeteorites(Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1);
-        this.meteorite1 =  new Meteorite(width/4 - bitmap.getWidth()/2, height/4 - bitmap.getHeight()/2, bitmap);
+        this.meteorite =  new Meteorite(width/10, height/10, bitmap);
     }
 
     private void initAirplane(Context context) {
@@ -49,20 +46,20 @@ public class GameManager {
     }
 
     private boolean checkCollisions() {
-        //If the meteorite image intersects the plane image on the right border
-        if (meteorite1.getX()+ meteorite1.getBitmapWidth()/2 >
-                airplane.getX() - airplane.getBitmapWidth()/2) {
-            //If the meteorite image intersects the plane image on the bottom border
-            if (meteorite1.getY() + meteorite1.getBitmapHeight() / 2 >
-                    airplane.getY() - airplane.getBitmapHeight() / 2) {
-                return false;   //collision - stop game cycle
+        //If the meteorite image intersects the plane image on the bottom border
+        if (meteorite.getY() + meteorite.getBitmapHeight() / 2 >
+                airplane.getY() - airplane.getBitmapHeight() / 2) {
+            //If the meteorite image intersects the plane image on the right border
+            if (meteorite.getX() + meteorite.getBitmapWidth() / 2 >
+                    airplane.getX() - airplane.getBitmapWidth() / 2) {
+                return false;       //collision - stop game cycle
             }
         }
-        return true;    //no collisions
+        return true;        //no collisions
     }
 
     public boolean updateAndCheckCollisions() {
-        meteorite1.update();
+        meteorite.updateCoordinates();
         return checkCollisions();
     }
 }

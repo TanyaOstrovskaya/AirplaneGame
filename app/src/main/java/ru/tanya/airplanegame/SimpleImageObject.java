@@ -15,8 +15,8 @@ public class SimpleImageObject {
     public SimpleImageObject (int x, int y, Bitmap bitmap) {
         bitmapHeight = bitmap.getHeight();
         bitmapWidth = bitmap.getWidth();
-        this.x = x - bitmapWidth/2;
-        this.y = y - bitmapHeight/2;
+        this.x = x;
+        this.y = y;
         this.bitmap = bitmap;
     }
 
