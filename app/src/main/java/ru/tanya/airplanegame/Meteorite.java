@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 public class Meteorite extends SimpleImageObject {
 
-    private int speed = 5;
+    public static final int CURRENT_SPEED =  1;
 
     public Meteorite(int x, int y, Bitmap bitmap) {
         super(x, y, bitmap);
@@ -18,12 +18,12 @@ public class Meteorite extends SimpleImageObject {
             } else {
                 x = GameManager.getWidth() - getBitmapWidth();
             }
-
         }
     }
 
+    @Override
     public void updateCoordinates() {
-        y += speed;
+        y += CURRENT_SPEED;
         checkDisplayBounds();
     }
 }

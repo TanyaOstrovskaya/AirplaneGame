@@ -11,6 +11,11 @@ public class GameManager {
     private static int width;
     private static int height;
 
+    private int currentAirplaneAngle = 0;
+
+    public void setCurrentAirplaneAngle(int currentAirplaneAngle) {
+        airplane.setAngle(currentAirplaneAngle);
+    }
 
     public GameManager(int w, int h, Context context) {
         height = h;
@@ -50,22 +55,26 @@ public class GameManager {
         if (meteorite.getY() + meteorite.getBitmapHeight() / 2>
                 airplane.getY() - airplane.getBitmapHeight() / 2) {
 
-            // if meteorite is in left part of display
             if (meteorite.getX() < width/2) {
-                //If the meteorite image intersects the plane image on the RIGHT border
+                // if meteorite is in LEFT PART of display
+                // if the meteorite image intersects the plane image on the RIGHT border
                 if (meteorite.getX() + meteorite.getBitmapWidth() / 2  >
                         airplane.getX() - airplane.getBitmapWidth() / 2) {
                     meteorite.updateCoordinates();
+                    airplane.updateCoordinates();
                     return false;       //collision - stop game cycle
                 }
             } else  {
+                // if meteorite is in RIGHT PART of display
                 // if the meteorite image intersects the plane image on the LEFT border
                 if (meteorite.getX() - meteorite.getBitmapWidth() / 2 <
                         airplane.getX() - airplane.getBitmapWidth() / 2) {
                     meteorite.updateCoordinates();
+                    airplane.updateCoordinates();
                     return false;       //collision - stop game cycle
                 }
             }
+
         }
 
         // no collisions
@@ -73,6 +82,7 @@ public class GameManager {
     }
 
     public boolean updateAndCheckCollisions() {
+        airplane.updateCoordinates();
         meteorite.updateCoordinates();
         return checkCollisions();
     }
