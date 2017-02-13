@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 
 public class SimpleImageObject {
 
-    public static final int CURRENT_SPEED =  1;
     protected int x;
     protected int y;
     private Bitmap bitmap;
@@ -39,5 +38,7 @@ public class SimpleImageObject {
     public int getBitmapWidth() {
         return bitmapWidth;
     }
+
+    public void updateCoordinates() { }
 
 }

@@ -10,7 +10,6 @@ public class MainThread extends Thread {
 
     private SurfaceHolder surfaceHolder;
     private MainGamePanel gamePanel;
-    private GameManager gameManager;
 
     private boolean running;
     public boolean isRunning() { return running;}

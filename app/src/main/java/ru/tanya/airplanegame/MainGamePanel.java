@@ -97,6 +97,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         return gameManager.updateAndCheckCollisions();
     }
 
+    public GameManager getGameManager() {
+        return gameManager;
+    }
 
     //    public void showMessage(String text) {
 //        if (toast != null) {
