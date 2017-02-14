@@ -42,7 +42,7 @@ public class GameManager {
 
     private void initMeteorites(Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1);
-        this.meteorite =  new Meteorite(bitmap.getWidth(), bitmap.getHeight(), bitmap);
+        this.meteorite =  new Meteorite(width/4, height/4, bitmap);
     }
 
     private void initAirplane(Context context) {
@@ -52,8 +52,8 @@ public class GameManager {
 
     private boolean checkCollisions() {
         // if the meteorite image intersects the plane image on the BOTTOM border
-        if (meteorite.getY() + meteorite.getBitmapHeight() / 2>
-                airplane.getY() - airplane.getBitmapHeight() / 2) {
+        if (meteorite.getY() + meteorite.getBitmapHeight() / 2 >
+                airplane.getY() - airplane.getBitmapHeight() / 4) {
 
             if (meteorite.getX() < width/2) {
                 // if meteorite is in LEFT PART of display
@@ -76,9 +76,7 @@ public class GameManager {
             }
 
         }
-
-        // no collisions
-        return true;
+        return true;        // no collisions
     }
 
     public boolean updateAndCheckCollisions() {
