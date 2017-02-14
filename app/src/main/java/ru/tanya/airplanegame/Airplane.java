@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 public class Airplane extends SimpleImageObject{
 
-    public static final double SPEED_COEFFICIENT = 0.5; //speed on OX
+    public static final double SPEED_COEFFICIENT = 0.25; //speed on OX
     private int angle;
 
     public Airplane(int x, int y, Bitmap bitmap) {

@@ -51,33 +51,77 @@ public class GameManager {
     }
 
     private boolean checkCollisions() {
-        // if the meteorite image intersects the plane image on the BOTTOM border
-        if (meteorite.getY() + meteorite.getBitmapHeight() / 2 >
-                airplane.getY() - airplane.getBitmapHeight() / 4) {
+        int airplaneX = airplane.getX();
+        int airplaneY = airplane.getY();
+        int meteoriteX = meteorite.getX();
+        int meteoriteY = meteorite.getY();
 
-            if (meteorite.getX() < width/2) {
-                // if meteorite is in LEFT PART of display
-                // if the meteorite image intersects the plane image on the RIGHT border
-                if (meteorite.getX() + meteorite.getBitmapWidth() / 2  >
-                        airplane.getX() - airplane.getBitmapWidth() / 2) {
-                    meteorite.updateCoordinates();
-                    airplane.updateCoordinates();
-                    return false;       //collision - stop game cycle
-                }
-            } else  {
-                // if meteorite is in RIGHT PART of display
-                // if the meteorite image intersects the plane image on the LEFT border
-                if (meteorite.getX() - meteorite.getBitmapWidth() / 2 <
-                        airplane.getX() - airplane.getBitmapWidth() / 2) {
-                    meteorite.updateCoordinates();
-                    airplane.updateCoordinates();
-                    return false;       //collision - stop game cycle
-                }
+        int deltaX = meteoriteX - airplaneX;
+        int deltaY = meteoriteY - airplaneY;
+
+        // if metheorite is away from airplane
+        if ((Math.abs(deltaX) > airplane.getBitmapWidth() / 2) || (Math.abs(deltaY) > airplane.getBitmapHeight() / 2)){
+            return true;    // no collisions
+        } else {
+            // if meteorite is under airplane wings
+            if (deltaY > 0) {
+                if (Math.abs(deltaX) > 0.18 * airplane.getBitmapWidth()) 
+
+            } else {
+                // if meteorite is in the upper part of airplane
             }
-
         }
-        return true;        // no collisions
+
+
+
+        // if meteorite is to the RIGHT of airplane
+        if (deltaX > 0) {
+
+
+        } else {
+            // if meteorite is to the LEFT of airplane
+        }
+
+//        // if meteorite is to the RIGHT of airplane
+//        if (meteoriteX > airplaneX) {
+//            //if meteorite is ABOVE airplane wing but near airplane
+//            if ((meteoriteY < airplaneY - airplane.getBitmapHeight() / 4) &&
+//                    (meteoriteY > airplaneY - airplane.getBitmapHeight() / 2)) {
+//
+//            }
+//        } else {
+//            // if meteorite is to the LEFT of airplane
+//        }
     }
+
+//    private boolean checkCollisions() {
+//        // if the meteorite image intersects the plane image on the BOTTOM border
+//        if (meteorite.getY() + meteorite.getBitmapHeight() / 2 >
+//                airplane.getY() - airplane.getBitmapHeight() / 4) {
+//
+//            if (meteorite.getX() < width/2) {
+//                // if meteorite is in LEFT PART of display
+//                // if the meteorite image intersects the plane image on the RIGHT border
+//                if (meteorite.getX() + meteorite.getBitmapWidth() / 2  >
+//                        airplane.getX() - airplane.getBitmapWidth() / 2) {
+//                    meteorite.updateCoordinates();
+//                    airplane.updateCoordinates();
+//                    return false;       //collision - stop game cycle
+//                }
+//            } else  {
+//                // if meteorite is in RIGHT PART of display
+//                // if the meteorite image intersects the plane image on the LEFT border
+//                if (meteorite.getX() - meteorite.getBitmapWidth() / 2 <
+//                        airplane.getX() - airplane.getBitmapWidth() / 2) {
+//                    meteorite.updateCoordinates();
+//                    airplane.updateCoordinates();
+//                    return false;       //collision - stop game cycle
+//                }
+//            }
+//
+//        }
+//        return true;        // no collisions
+//    }
 
     public boolean updateAndCheckCollisions() {
         airplane.updateCoordinates();
