@@ -101,14 +101,6 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         return gameManager;
     }
 
-    //    public void showMessage(String text) {
-//        if (toast != null) {
-//            toast.cancel();
-//        }
-//        toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-//        toast.setGravity(Gravity.CENTER, 0, 0);
-//        toast.show();
-//    }
 }
 
 
