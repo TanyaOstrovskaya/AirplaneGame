@@ -2,11 +2,15 @@ package ru.tanya.airplanegame;
 
 import android.graphics.Bitmap;
 
-public class Meteorite extends SimpleImageObject {
+import java.util.Vector;
 
-    public static final int CURRENT_SPEED =  2;
+public class Cloud extends SimpleImageObject {
 
-    public Meteorite(int x, int y, Bitmap bitmap) {
+    public static final double CURRENT_SPEED  = 1;
+
+    private Vector<double> possibleX =
+
+    public Cloud(int x, int y, Bitmap bitmap) {
         super(x, y, bitmap);
     }
 
