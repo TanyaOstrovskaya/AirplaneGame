@@ -8,6 +8,7 @@ public class GameManager {
 
     private Airplane airplane;
     private Meteorite meteorite;
+    private Cloud cloud;
     private static int width;
     private static int height;
 
@@ -22,7 +23,9 @@ public class GameManager {
         width = w;
         initAirplane(context);
         initMeteorites(context);
+        initCloud(context);
     }
+
 
     public static int getWidth() {
         return width;
@@ -40,14 +43,23 @@ public class GameManager {
         return meteorite;
     }
 
+    public Cloud getCloud() {
+        return cloud;
+    }
+
     private void initMeteorites(Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1);
-        this.meteorite =  new Meteorite(width/4, height/4, bitmap);
+        this.meteorite =  new Meteorite(width/4, -bitmap.getHeight(), bitmap);
     }
 
     private void initAirplane(Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.plane);
         this.airplane = new Airplane(width/2, height/2, bitmap);
+    }
+
+    private void initCloud(Context context) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.cloud);
+        this.cloud = new Cloud(width / 4 * 3, -bitmap.getHeight()/2, bitmap);
     }
 
     private boolean checkCollisions() {
@@ -124,6 +136,7 @@ public class GameManager {
 //    }
 
     public boolean updateAndCheckCollisions() {
+        cloud.updateCoordinates();
         airplane.updateCoordinates();
         meteorite.updateCoordinates();
         return checkCollisions();
