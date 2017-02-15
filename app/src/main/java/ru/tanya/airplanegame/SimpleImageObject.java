@@ -3,7 +3,7 @@ package ru.tanya.airplanegame;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class SimpleImageObject {
+public abstract class SimpleImageObject {
 
     protected int x;
     protected int y;
@@ -39,6 +39,6 @@ public class SimpleImageObject {
         return bitmapWidth;
     }
 
-    public void updateCoordinates() { }
+    public abstract void updateCoordinates();
 
 }

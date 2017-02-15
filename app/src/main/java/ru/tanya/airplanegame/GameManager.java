@@ -87,10 +87,7 @@ public class GameManager {
                         return false;
                     else
                         return true;
-
-
                 }
-
             }
         }
     }

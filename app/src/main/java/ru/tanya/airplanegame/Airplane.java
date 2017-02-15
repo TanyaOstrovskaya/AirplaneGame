@@ -20,7 +20,6 @@ public class Airplane extends SimpleImageObject{
             return true;
     }
 
-    @Override
     public void updateCoordinates() {
         if (checkBounds()) {
             x += SPEED_COEFFICIENT * angle;
