@@ -60,39 +60,42 @@ public class GameManager {
         int deltaY = meteoriteY - airplaneY;
 
         // if metheorite is away from airplane
-        if ((Math.abs(deltaX) > airplane.getBitmapWidth() / 2) || (Math.abs(deltaY) > airplane.getBitmapHeight() / 2)){
+        if ((Math.abs(deltaX) > airplane.getBitmapWidth() / 2 + meteorite.getBitmapWidth()/2)
+                || (Math.abs(deltaY) > airplane.getBitmapHeight() / 2 + meteorite.getBitmapHeight()/2)) {
             return true;    // no collisions
         } else {
-            // if meteorite is under airplane wings
+            // if meteorite is in lower part of airplane
             if (deltaY > 0) {
-                if (Math.abs(deltaX) > 0.18 * airplane.getBitmapWidth()) 
+                if (Math.abs(deltaX) < 0.18 * airplane.getBitmapWidth()) {
+                    return false;
+                } else {
+                    // check collision under airplane wings
+                    if ((deltaY < meteorite.getBitmapHeight()/2) &&
+                            (Math.abs(deltaX) < 0.18 * airplane.getBitmapWidth() + meteorite.getBitmapWidth()/2))
+                        return false;
+                    else
+                        return true;
+                }
 
+            // if meteorite is in upper part of airplane
             } else {
-                // if meteorite is in the upper part of airplane
+                // if meteorite intersect airplane wing from the right/left border
+                if (Math.abs(deltaY) < airplane.getBitmapHeight()/4) {
+                    return false;
+                } else {
+                    if (Math.abs(deltaY) < airplane.getBitmapHeight()/4 + meteorite.getBitmapHeight()/2)
+                        return false;
+                    else
+                        return true;
+
+
+                }
+
             }
         }
-
-
-
-        // if meteorite is to the RIGHT of airplane
-        if (deltaX > 0) {
-
-
-        } else {
-            // if meteorite is to the LEFT of airplane
-        }
-
-//        // if meteorite is to the RIGHT of airplane
-//        if (meteoriteX > airplaneX) {
-//            //if meteorite is ABOVE airplane wing but near airplane
-//            if ((meteoriteY < airplaneY - airplane.getBitmapHeight() / 4) &&
-//                    (meteoriteY > airplaneY - airplane.getBitmapHeight() / 2)) {
-//
-//            }
-//        } else {
-//            // if meteorite is to the LEFT of airplane
-//        }
     }
+
+
 
 //    private boolean checkCollisions() {
 //        // if the meteorite image intersects the plane image on the BOTTOM border
