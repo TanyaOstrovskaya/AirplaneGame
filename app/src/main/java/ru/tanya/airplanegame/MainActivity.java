@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class MainActivity  extends Activity{
 
     private int currentOrientationAngle = 0;
-    private boolean isRunning;
+    public static boolean isRunning;
     OrientationEventListener orientationEventListener;
 
     MainGamePanel gamepanel;
