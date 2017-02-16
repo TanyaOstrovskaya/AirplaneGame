@@ -1,16 +1,15 @@
 package ru.tanya.airplanegame;
 
-        import android.graphics.Bitmap;
+import android.graphics.Bitmap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
-        import java.util.LinkedList;
-        import java.util.List;
-        import java.util.Random;
-
-        import static java.util.Arrays.*;
+import static java.util.Arrays.*;
 
 public class Cloud extends SimpleImageObject {
 
-    public static final double CURRENT_SPEED  = 0.5;
+    public static final double CURRENT_SPEED  = 4;
 
     private List<Integer> possibleXList;
 
