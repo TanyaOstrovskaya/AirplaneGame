@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-public class FinishActivity extends Activity{
+public class FinishActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,6 +19,8 @@ public class FinishActivity extends Activity{
     }
 
     public void onExitButtonClick (View view) {
-        finish();
+        Intent intent = new Intent(FinishActivity.this, FinishActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        finishAffinity();
     }
 }

@@ -1,6 +1,7 @@
 package ru.tanya.airplanegame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,6 +19,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private MainThread thread;
     private GameManager gameManager;
     private Toast toast;                //for messages
+    private Context context;
 
     private int width;
     private int height;
@@ -29,6 +31,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         initWidthAndHeigth(context);
         initGameManager(context);
         initMainThread();
+        this.context = context;
 
         setFocusable(true);
     }
@@ -89,11 +92,16 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 null );
 
         if (!thread.isRunning()) {
-            canvas.drawColor(Color.WHITE);
-            Paint paint = new Paint();
-            paint.setTextSize(40);
-            paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText("YOU LOSE", gameManager.getWidth()/2, gameManager.getHeight()/2, paint);
+            Intent intent = new Intent(context, FinishActivity.class);
+            context.startActivity(intent);
+
+
+//            canvas.drawColor(Color.WHITE);
+//            Paint paint = new Paint();
+//            paint.setTextSize(40);
+//            paint.setTextAlign(Paint.Align.CENTER);
+//            canvas.drawText("YOU LOSE", gameManager.getWidth()/2, gameManager.getHeight()/2, paint);
+
         }
     }
 

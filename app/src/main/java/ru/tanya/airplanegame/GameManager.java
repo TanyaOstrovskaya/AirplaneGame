@@ -75,6 +75,7 @@ public class GameManager {
         if ((Math.abs(deltaX) > airplane.getBitmapWidth() / 2 + meteorite.getBitmapWidth()/2)
                 || (Math.abs(deltaY) > airplane.getBitmapHeight() / 2 + meteorite.getBitmapHeight()/2)) {
             return true;    // no collisions
+
         } else {
             // if meteorite is in lower part of airplane
             if (deltaY > 0) {
@@ -91,6 +92,10 @@ public class GameManager {
 
             // if meteorite is in upper part of airplane
             } else {
+                // if meteorite intersect airplane top
+                if (Math.abs(deltaX)< 0.08 *airplane.getBitmapWidth())
+                    return false;
+
                 // if meteorite intersect airplane wing from the right/left border
                 if (Math.abs(deltaY) < airplane.getBitmapHeight()/4) {
                     return false;
