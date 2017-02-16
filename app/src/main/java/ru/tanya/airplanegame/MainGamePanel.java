@@ -78,9 +78,13 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.rgb(175, 237, 248));
-        canvas.drawBitmap(gameManager.getCloud().getBitmap(),
-                gameManager.getCloud().getX() - gameManager.getCloud().getBitmapWidth()/2,
-                gameManager.getCloud().getY() - gameManager.getCloud().getBitmapHeight()/2,
+        canvas.drawBitmap(gameManager.getCloud1().getBitmap(),
+                gameManager.getCloud1().getX() - gameManager.getCloud1().getBitmapWidth()/2,
+                gameManager.getCloud1().getY() - gameManager.getCloud1().getBitmapHeight()/2,
+                null );
+        canvas.drawBitmap(gameManager.getCloud2().getBitmap(),
+                gameManager.getCloud2().getX() - gameManager.getCloud2().getBitmapWidth()/2,
+                gameManager.getCloud2().getY() - gameManager.getCloud2().getBitmapHeight()/2,
                 null );
         canvas.drawBitmap(gameManager.getAirplane().getBitmap(),
                 gameManager.getAirplane().getX() - gameManager.getAirplane().getBitmapWidth()/2,
@@ -90,6 +94,12 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 gameManager.getMeteorite().getX() - gameManager.getMeteorite().getBitmapWidth()/2,
                 gameManager.getMeteorite().getY() - gameManager.getMeteorite().getBitmapHeight()/2,
                 null );
+
+        Paint paint = new Paint();
+        paint.setTextSize(50);
+        paint.setTextAlign(Paint.Align.RIGHT);
+        paint.setColor(Color.BLUE);
+        canvas.drawText("SCORE: " + gameManager.getScore(), gameManager.getWidth()*2/3, 60, paint);
 
         if (!thread.isRunning()) {
             Intent intent = new Intent(context, FinishActivity.class);

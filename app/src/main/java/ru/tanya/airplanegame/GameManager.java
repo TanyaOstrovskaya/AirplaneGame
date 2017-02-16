@@ -8,9 +8,11 @@ public class GameManager {
 
     private Airplane airplane;
     private Meteorite meteorite;
-    private Cloud cloud;
+    private Cloud cloud1;
+    private Cloud cloud2;
     private static int width;
     private static int height;
+    private int score;
 
     private int currentAirplaneAngle = 0;
 
@@ -23,9 +25,12 @@ public class GameManager {
         width = w;
         initAirplane(context);
         initMeteorites(context);
-        initCloud(context);
+        initClouds(context);
     }
 
+    public int getScore() {
+        return score;
+    }
 
     public static int getWidth() {
         return width;
@@ -43,12 +48,15 @@ public class GameManager {
         return meteorite;
     }
 
-    public Cloud getCloud() {
-        return cloud;
+    public Cloud getCloud1() {
+        return cloud1;
+    }
+    public Cloud getCloud2() {
+        return cloud2;
     }
 
     private void initMeteorites(Context context) {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1);
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite2);
         this.meteorite =  new Meteorite(width/4, -bitmap.getHeight(), bitmap);
     }
 
@@ -57,9 +65,10 @@ public class GameManager {
         this.airplane = new Airplane(width/2, height/2, bitmap);
     }
 
-    private void initCloud(Context context) {
+    private void initClouds(Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.cloud);
-        this.cloud = new Cloud(width / 4 * 3, -bitmap.getHeight()/2, bitmap);
+        this.cloud1 = new Cloud(width / 4 * 3, -height/3, bitmap);
+        this.cloud2 = new Cloud(width / 4, -height*5/6, bitmap);
     }
 
     private boolean checkCollisions() {
@@ -141,9 +150,18 @@ public class GameManager {
 //    }
 
     public boolean updateAndCheckCollisions() {
-        cloud.updateCoordinates();
+        cloud1.updateCoordinates();
+        cloud2.updateCoordinates();
         airplane.updateCoordinates();
         meteorite.updateCoordinates();
+        updateScore();
+
         return checkCollisions();
+    }
+
+    private void updateScore() {
+        if (meteorite.isChangedScore()) {
+            ++score;
+        }
     }
 }
