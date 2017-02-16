@@ -7,7 +7,8 @@ import android.graphics.BitmapFactory;
 public class GameManager {
 
     private Airplane airplane;
-    private Meteorite meteorite;
+    private Meteorite meteorite1;
+    private Meteorite meteorite2;
     private Cloud cloud1;
     private Cloud cloud2;
     private static int width;
@@ -44,9 +45,9 @@ public class GameManager {
         return airplane;
     }
 
-    public Meteorite getMeteorite() {
-        return meteorite;
-    }
+    public Meteorite getMeteorite1() { return meteorite1;  }
+
+    public Meteorite getMeteorite2() { return meteorite2; }
 
     public Cloud getCloud1() {
         return cloud1;
@@ -56,8 +57,11 @@ public class GameManager {
     }
 
     private void initMeteorites(Context context) {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite2);
-        this.meteorite =  new Meteorite(width/4, -bitmap.getHeight(), bitmap);
+        Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite1);
+        this.meteorite1 =  new Meteorite(width/4, -bitmap1.getHeight(), bitmap1);
+
+        Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteorite2);
+        this.meteorite2 =  new Meteorite(width/4*3, -height/2 - bitmap2.getHeight(), bitmap2);
     }
 
     private void initAirplane(Context context) {
@@ -71,7 +75,7 @@ public class GameManager {
         this.cloud2 = new Cloud(width / 4, -height*5/6, bitmap);
     }
 
-    private boolean checkCollisions() {
+    private boolean checkCollisions(Meteorite meteorite) {
         int airplaneX = airplane.getX();
         int airplaneY = airplane.getY();
         int meteoriteX = meteorite.getX();
@@ -121,25 +125,25 @@ public class GameManager {
 
 
 //    private boolean checkCollisions() {
-//        // if the meteorite image intersects the plane image on the BOTTOM border
-//        if (meteorite.getY() + meteorite.getBitmapHeight() / 2 >
+//        // if the meteorite1 image intersects the plane image on the BOTTOM border
+//        if (meteorite1.getY() + meteorite1.getBitmapHeight() / 2 >
 //                airplane.getY() - airplane.getBitmapHeight() / 4) {
 //
-//            if (meteorite.getX() < width/2) {
-//                // if meteorite is in LEFT PART of display
-//                // if the meteorite image intersects the plane image on the RIGHT border
-//                if (meteorite.getX() + meteorite.getBitmapWidth() / 2  >
+//            if (meteorite1.getX() < width/2) {
+//                // if meteorite1 is in LEFT PART of display
+//                // if the meteorite1 image intersects the plane image on the RIGHT border
+//                if (meteorite1.getX() + meteorite1.getBitmapWidth() / 2  >
 //                        airplane.getX() - airplane.getBitmapWidth() / 2) {
-//                    meteorite.updateCoordinates();
+//                    meteorite1.updateCoordinates();
 //                    airplane.updateCoordinates();
 //                    return false;       //collision - stop game cycle
 //                }
 //            } else  {
-//                // if meteorite is in RIGHT PART of display
-//                // if the meteorite image intersects the plane image on the LEFT border
-//                if (meteorite.getX() - meteorite.getBitmapWidth() / 2 <
+//                // if meteorite1 is in RIGHT PART of display
+//                // if the meteorite1 image intersects the plane image on the LEFT border
+//                if (meteorite1.getX() - meteorite1.getBitmapWidth() / 2 <
 //                        airplane.getX() - airplane.getBitmapWidth() / 2) {
-//                    meteorite.updateCoordinates();
+//                    meteorite1.updateCoordinates();
 //                    airplane.updateCoordinates();
 //                    return false;       //collision - stop game cycle
 //                }
@@ -153,15 +157,17 @@ public class GameManager {
         cloud1.updateCoordinates();
         cloud2.updateCoordinates();
         airplane.updateCoordinates();
-        meteorite.updateCoordinates();
+        meteorite1.updateCoordinates();
+        meteorite2.updateCoordinates();
         updateScore();
 
-        return checkCollisions();
+        return checkCollisions(meteorite1) && checkCollisions(meteorite2);
     }
 
     private void updateScore() {
-        if (meteorite.isChangedScore()) {
+        if (meteorite1.isChangedScore())
             ++score;
-        }
+        if (meteorite2.isChangedScore())
+            ++score;
     }
 }

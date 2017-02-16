@@ -90,28 +90,25 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 gameManager.getAirplane().getX() - gameManager.getAirplane().getBitmapWidth()/2,
                 gameManager.getAirplane().getY() - gameManager.getAirplane().getBitmapHeight()/2,
                 null );
-        canvas.drawBitmap(gameManager.getMeteorite().getBitmap(),
-                gameManager.getMeteorite().getX() - gameManager.getMeteorite().getBitmapWidth()/2,
-                gameManager.getMeteorite().getY() - gameManager.getMeteorite().getBitmapHeight()/2,
+        canvas.drawBitmap(gameManager.getMeteorite1().getBitmap(),
+                gameManager.getMeteorite1().getX() - gameManager.getMeteorite1().getBitmapWidth()/2,
+                gameManager.getMeteorite1().getY() - gameManager.getMeteorite1().getBitmapHeight()/2,
                 null );
 
+        canvas.drawBitmap(gameManager.getMeteorite2().getBitmap(),
+                gameManager.getMeteorite2().getX() - gameManager.getMeteorite2().getBitmapWidth()/2,
+                gameManager.getMeteorite2().getY() - gameManager.getMeteorite2().getBitmapHeight()/2,
+                null );
         Paint paint = new Paint();
-        paint.setTextSize(50);
+        paint.setTextSize(70);
         paint.setTextAlign(Paint.Align.RIGHT);
         paint.setColor(Color.BLUE);
-        canvas.drawText("SCORE: " + gameManager.getScore(), gameManager.getWidth()*2/3, 60, paint);
+        canvas.drawText("SCORE: " + gameManager.getScore(), gameManager.getWidth()*2/3, 80, paint);
 
         if (!thread.isRunning()) {
             Intent intent = new Intent(context, FinishActivity.class);
             context.startActivity(intent);
-
-
-//            canvas.drawColor(Color.WHITE);
-//            Paint paint = new Paint();
-//            paint.setTextSize(40);
-//            paint.setTextAlign(Paint.Align.CENTER);
-//            canvas.drawText("YOU LOSE", gameManager.getWidth()/2, gameManager.getHeight()/2, paint);
-
+            
         }
     }
 

@@ -2,14 +2,22 @@ package ru.tanya.airplanegame;
 
 import android.graphics.Bitmap;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+import static java.util.Arrays.asList;
+
 public class Meteorite extends SimpleImageObject {
 
-    public static final int CURRENT_SPEED =  3;
+    public static double CURRENT_SPEED =  3;
     private int meteoriteScore;
     private boolean changedScore;
+    private List<Integer> possibleXList;
 
     public Meteorite(int x, int y, Bitmap bitmap) {
         super(x, y, bitmap);
+        initPossibleXList();
     }
 
     private void checkDisplayBounds() {
@@ -17,12 +25,19 @@ public class Meteorite extends SimpleImageObject {
             y = -getBitmapHeight()/2;
             ++meteoriteScore;
             changedScore = true;
-            if (x > GameManager.getWidth()/2) {
-                x = getBitmapWidth();
-            } else {
-                x = GameManager.getWidth() - getBitmapWidth();
-            }
+            x = getRandomPossibleX();
+            CURRENT_SPEED += 0.3;
         }
+    }
+
+    private void initPossibleXList() {
+        int width = GameManager.getWidth();
+        possibleXList = new LinkedList<Integer>(asList(width/3, width/3*2, width/4, width/4*3));
+    }
+
+    public int getRandomPossibleX() {
+        Random random = new Random(System.currentTimeMillis());
+        return possibleXList.get(random.nextInt(3));
     }
 
     public int getMeteoriteScore() {
