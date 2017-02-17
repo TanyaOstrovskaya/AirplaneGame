@@ -109,6 +109,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         if (!thread.isRunning()) {
             Intent intent = new Intent(context, FinishActivity.class);
+            intent.putExtra("score", Integer.toString(gameManager.getScore()));
             context.startActivity(intent);
         }
     }

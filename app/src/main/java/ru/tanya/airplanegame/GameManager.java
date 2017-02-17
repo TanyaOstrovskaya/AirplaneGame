@@ -31,9 +31,7 @@ public class GameManager {
         initClouds(context);
     }
 
-    public int getScore() {
-        return score;
-    }
+    public int getScore() { return score; }
 
     public static int getWidth() {
         return width;
@@ -52,10 +50,10 @@ public class GameManager {
 
     public Meteorite getMeteorite2() { return meteorite2; }
 
-
     public Cloud getCloud1() {
         return cloud1;
     }
+
     public Cloud getCloud2() {
         return cloud2;
     }
