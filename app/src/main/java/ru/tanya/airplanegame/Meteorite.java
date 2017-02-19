@@ -37,7 +37,6 @@ public class Meteorite extends SimpleImageObject {
         return possibleXList.get(random.nextInt(3));
     }
 
-
     public boolean isChangedScore() {
         return changedScore;
     }

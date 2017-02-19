@@ -14,11 +14,8 @@ import android.widget.Toast;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
-    private static final String TAG = MainGamePanel.class.getSimpleName();
-
     private MainThread thread;
     private GameManager gameManager;
-    private Toast toast;                //for messages
     private Context context;
 
     private int width;

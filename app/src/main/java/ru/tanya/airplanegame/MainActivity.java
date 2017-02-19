@@ -9,10 +9,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-public class MainActivity  extends Activity{
+public class MainActivity extends Activity{
 
     private int currentOrientationAngle = 0;
-    public static boolean isRunning;
     OrientationEventListener orientationEventListener;
 
     MainGamePanel gamepanel;
@@ -34,7 +33,6 @@ public class MainActivity  extends Activity{
                 = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
             @Override
             public void onOrientationChanged(int arg0) {
-                // TODO Auto-generated method stub
                 currentOrientationAngle = arg0;
                 gamepanel.getGameManager().setCurrentAirplaneAngle(currentOrientationAngle);
             }};
@@ -44,7 +42,7 @@ public class MainActivity  extends Activity{
         if (orientationEventListener.canDetectOrientation()){
             orientationEventListener.enable();
         } else {
-            Toast.makeText(this, "Can't Detect Orientation", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Can't detect orientation", Toast.LENGTH_LONG).show();
             finish();
         }
     }

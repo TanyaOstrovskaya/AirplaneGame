@@ -126,9 +126,6 @@ public class GameManager {
         }
     }
 
-
-
-
     public boolean updateAndCheckCollisions() {
         cloud1.updateCoordinates();
         cloud2.updateCoordinates();
