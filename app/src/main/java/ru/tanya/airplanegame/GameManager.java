@@ -77,7 +77,6 @@ public class GameManager {
         this.cloud2 = new Cloud(width / 4, -height*5/6, bitmap);
     }
 
-
     private boolean checkCollisions(Meteorite meteorite) {
 
         int airplaneX = airplane.getX();

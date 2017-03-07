@@ -50,6 +50,5 @@ public class Airplane extends SimpleImageObject{
         } else {
             this.angle = angle - 360;
         }
-
     }
 }
